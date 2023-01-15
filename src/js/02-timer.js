@@ -19,7 +19,7 @@ const options = {
   onClose(selectedDates) {
     console.log(selectedDates[0]);
 
-    if (selectedDates[0].getFullYear() < new Date().getFullYear()) {
+    if (selectedDates[0] < new Date()) {
       Notiflix.Notify.failure('Please choose a date in the future');
     }
     startBtn.removeAttribute('disabled');
@@ -34,17 +34,16 @@ startBtn.addEventListener('click', () => {
     const endDate = fp.selectedDates[0];
     const difTime = endDate - currentDate;
     const convertedTime = convertMs(difTime);
-    console.log(convertedTime);
 
-    days.textContent = convertedTime.days;
-    hours.textContent = convertedTime.hours;
-    minutes.textContent = convertedTime.minutes;
-    seconds.textContent = convertedTime.seconds;
+    days.textContent = addLeadingZero(convertedTime.days);
+    hours.textContent = addLeadingZero(convertedTime.hours);
+    minutes.textContent = addLeadingZero(convertedTime.minutes);
+    seconds.textContent = addLeadingZero(convertedTime.seconds);
   }, 1000);
 });
 
 function addLeadingZero(value) {
-  value.toString().padStart(2, 0);
+  return value.toString().padStart(2, 0);
 }
 
 function convertMs(ms) {
