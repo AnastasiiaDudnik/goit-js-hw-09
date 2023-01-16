@@ -8,6 +8,7 @@ const days = document.querySelector('.value[data-days]');
 const hours = document.querySelector('.value[data-hours]');
 const minutes = document.querySelector('.value[data-minutes]');
 const seconds = document.querySelector('.value[data-seconds]');
+let intervalId = '';
 
 startBtn.setAttribute('disabled', 'true');
 
@@ -29,11 +30,17 @@ const options = {
 const fp = flatpickr(input, options);
 
 startBtn.addEventListener('click', () => {
+  input.setAttribute('disabled', 'true');
   intervalId = setInterval(() => {
     const currentDate = new Date();
     const endDate = fp.selectedDates[0];
     const difTime = endDate - currentDate;
     const convertedTime = convertMs(difTime);
+
+    if (difTime < 1000) {
+      clearInterval(intervalId);
+      return;
+    }
 
     days.textContent = addLeadingZero(convertedTime.days);
     hours.textContent = addLeadingZero(convertedTime.hours);
