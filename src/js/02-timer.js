@@ -37,15 +37,15 @@ startBtn.addEventListener('click', () => {
     const difTime = endDate - currentDate;
     const convertedTime = convertMs(difTime);
 
-    if (difTime < 1000) {
-      clearInterval(intervalId);
-      return;
-    }
-
     days.textContent = addLeadingZero(convertedTime.days);
     hours.textContent = addLeadingZero(convertedTime.hours);
     minutes.textContent = addLeadingZero(convertedTime.minutes);
     seconds.textContent = addLeadingZero(convertedTime.seconds);
+
+    if (difTime < 0) {
+      clearInterval(intervalId);
+      return;
+    }
   }, 1000);
 });
 
